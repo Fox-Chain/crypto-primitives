@@ -224,7 +224,7 @@ pub struct MerkleTree<P: Config> {
     height: usize,
 }
 
-impl<P: Config + std::fmt::Debug> MerkleTree<P> {
+impl<P: Config + Debug> MerkleTree<P> {
     /// Create an empty merkle tree such that all leaves are zero-filled.
     /// Consider using a sparse merkle tree if you need the tree to be low memory
     pub fn blank(
