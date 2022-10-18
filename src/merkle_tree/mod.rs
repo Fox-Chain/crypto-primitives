@@ -1,5 +1,7 @@
 #![allow(clippy::needless_range_loop)]
 
+use core::fmt::Debug;
+
 /// Defines a trait to chain two types of CRHs.
 use crate::crh::TwoToOneCRHScheme;
 use crate::{CRHScheme, Error};
@@ -206,7 +208,7 @@ fn select_left_right_child<L: Clone>(
 /// For this release, padding will not be supported because of security concerns: if the leaf hash and two to one hash uses same underlying
 /// CRH, a malicious prover can prove a leaf while the actual node is an inner node. In the future, we can prefix leaf hashes in different layers to
 /// solve the problem.
-#[derive(Derivative)]
+#[derive(Derivative, Debug)]
 #[derivative(Clone(bound = "P: Config"))]
 pub struct MerkleTree<P: Config> {
     /// stores the non-leaf nodes in level order. The first element is the root node.
@@ -222,7 +224,7 @@ pub struct MerkleTree<P: Config> {
     height: usize,
 }
 
-impl<P: Config> MerkleTree<P> {
+impl<P: Config + std::fmt::Debug> MerkleTree<P> {
     /// Create an empty merkle tree such that all leaves are zero-filled.
     /// Consider using a sparse merkle tree if you need the tree to be low memory
     pub fn blank(
@@ -315,13 +317,16 @@ impl<P: Config> MerkleTree<P> {
             }
         }
 
-        Ok(MerkleTree {
+        let val = Ok(MerkleTree {
             leaf_nodes: leaves_digest,
             non_leaf_nodes,
             height: tree_height,
             leaf_hash_param: leaf_hash_param.clone(),
             two_to_one_hash_param: two_to_one_hash_param.clone(),
-        })
+        });
+
+        println!("{:?}", val);
+        val
     }
 
     /// Returns the root of the Merkle tree.

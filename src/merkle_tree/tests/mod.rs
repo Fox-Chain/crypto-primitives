@@ -22,6 +22,7 @@ mod bytes_mt_tests {
     type LeafH = pedersen::CRH<JubJub, Window4x256>;
     type CompressH = pedersen::TwoToOneCRH<JubJub, Window4x256>;
 
+    #[derive(Debug)]
     struct JubJubMerkleTreeParams;
 
     impl Config for JubJubMerkleTreeParams {
@@ -129,6 +130,7 @@ mod field_mt_tests {
     type H = poseidon::CRH<F>;
     type TwoToOneH = poseidon::TwoToOneCRH<F>;
 
+    #[derive(Debug)]
     struct FieldMTConfig;
     impl Config for FieldMTConfig {
         type Leaf = [F];

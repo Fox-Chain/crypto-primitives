@@ -1,5 +1,7 @@
 #![allow(clippy::upper_case_acronyms)]
 
+use core::fmt::Debug;
+
 use ark_std::hash::Hash;
 use ark_std::rand::Rng;
 pub mod bowe_hopwood;
@@ -29,7 +31,7 @@ pub trait CRHScheme {
         + Default
         + CanonicalSerialize
         + CanonicalDeserialize;
-    type Parameters: Clone;
+    type Parameters: Clone + Debug;
 
     fn setup<R: Rng>(r: &mut R) -> Result<Self::Parameters, Error>;
     fn evaluate<T: Borrow<Self::Input>>(
@@ -50,7 +52,7 @@ pub trait TwoToOneCRHScheme {
         + Default
         + CanonicalSerialize
         + CanonicalDeserialize;
-    type Parameters: Clone;
+    type Parameters: Clone + Debug;
 
     fn setup<R: Rng>(r: &mut R) -> Result<Self::Parameters, Error>;
 
